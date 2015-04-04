@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:cxf="http://cxf.apache.org/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/bindings/soap http://cxf.apache.org/schemas/configuration/soap.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+		http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd
+		http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+	<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+	
+	<bean class="org.apache.cxf.interceptor.LoggingInInterceptor" id="loggingInInterceptor" />
+	<bean class="org.apache.cxf.interceptor.LoggingOutInterceptor" id="logOutInterceptor" />
+	
+	<cxf:bus>
+		<cxf:inInterceptors>
+			<ref bean="loggingInInterceptor" />
+		</cxf:inInterceptors>
+		<cxf:outInterceptors>
+			<ref bean="logOutInterceptor" />
+		</cxf:outInterceptors>
+	</cxf:bus>
+
+	<jaxws:endpoint id="helloWorld" implementor="demo.spring.service.HelloWorldwsImpl" 
+		address="/HelloWorld" > <!-- wsdlLocation="classpath:HelloWorld.wsdl" -->
+		<jaxws:inInterceptors>
+	      <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+	         <constructor-arg>
+	            <map>
+	               <entry key="action" value="UsernameToken"/>
+	               <!-- <entry key="passwordType" value="PasswordDigest"/> -->
+	               <entry key="passwordType" value="PasswordText" />
+	               <!-- <entry key="signaturePropFile" value="..."/> -->
+	               <entry key="passwordCallbackRef">
+	                  <ref bean="myPasswordCallback"/>
+	               </entry>
+	            </map>
+	         </constructor-arg>
+	      </bean>
+	   </jaxws:inInterceptors>
+	</jaxws:endpoint>
+	
+	<bean class="demo.spring.service.ServerPasswordCallback" id="myPasswordCallback" />
+	
+   	
+	
+	<jaxrs:server id="restful" address="/restful">
+        <jaxrs:serviceBeans>
+           <bean class="demo.spring.service.Restful"></bean>
+        </jaxrs:serviceBeans>
+        <jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+		<jaxrs:providers>
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider"/>
+        </jaxrs:providers>
+     </jaxrs:server>
+</beans>
+<!-- END SNIPPET: beans -->

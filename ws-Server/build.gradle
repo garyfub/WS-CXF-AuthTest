@@ -1,0 +1,42 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+eclipse.classpath.downloadJavadoc = true
+eclipse.classpath.downloadSources = true
+
+
+group = 'Prince'
+version = '0.0.1'
+
+description = """"""
+
+
+
+eclipse {
+    wtp{ 
+        facet {
+            facet name: 'java', version: '1.8'
+            facet name: 'jst.web', version: '3.0'
+        }
+    }
+}
+
+
+
+repositories {
+        
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxws', version:'2.7.6'
+    compile group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxrs', version:'2.7.6'
+    compile group: 'org.apache.cxf', name: 'cxf-rt-transports-http', version:'2.7.6'
+    compile group: 'org.apache.cxf', name: 'cxf-rt-ws-security', version:'2.7.6'
+    compile group: 'org.springframework', name: 'spring-context', version:'4.0.3.RELEASE'
+    compile group: 'org.springframework', name: 'spring-web', version:'4.0.3.RELEASE'
+    compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version:'1.9.13'
+    compile 'org.apache.ws.security:wss4j:1.6.18'
+}
