@@ -49,6 +49,16 @@
 	
 	<bean class="demo.spring.service.ServerPasswordCallback" id="myPasswordCallback" />
 	
+	
+	
+	<jaxws:endpoint id="helloWorld1" implementor="demo.spring.service.HelloWorldws1" 
+		address="/HelloWorld1" >
+	</jaxws:endpoint>
+	
+	<jaxws:endpoint id="helloWorld2" implementor="demo.spring.service.HelloWorldwsImpl" 
+		address="/HelloWorld2" >
+	</jaxws:endpoint>
+	
    	
 	
 	<jaxrs:server id="restful" address="/restful">

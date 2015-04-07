@@ -3,6 +3,8 @@ apply plugin: 'maven'
 apply plugin: 'eclipse'
 apply plugin: 'war'
 apply plugin: 'eclipse-wtp'
+apply plugin: 'jetty'
+
 
 eclipse.classpath.downloadJavadoc = true
 eclipse.classpath.downloadSources = true
@@ -39,4 +41,25 @@ dependencies {
     compile group: 'org.springframework', name: 'spring-web', version:'4.0.3.RELEASE'
     compile group: 'org.codehaus.jackson', name: 'jackson-jaxrs', version:'1.9.13'
     compile 'org.apache.ws.security:wss4j:1.6.18'
+}
+
+
+test {
+    testLogging {
+        // Make sure output from 
+        // standard out or error is shown
+        // in Gradle output.
+        showStandardStreams = true
+
+        // Or we use events method:
+        // events 'standard_out', 'standard_error'
+
+        // Or set property events:
+        // events = ['standard_out', 'standard_error']
+
+        // Instead of string values we can
+        // use enum values:
+        // events org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_OUT,
+        //        org.gradle.api.tasks.testing.logging.TestLogEvent.STANDARD_ERROR,
+    }
 }
