@@ -48,9 +48,7 @@ public final class HelloWorldws_large {
         System.out.println("sayHi299.result=" + _sayHi299__return);
 
         }
-       
-
-        System.exit(0);
+        
     }
 
 }

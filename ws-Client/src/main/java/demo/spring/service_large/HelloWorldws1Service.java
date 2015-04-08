@@ -28,9 +28,9 @@ public class HelloWorldws1Service extends Service {
             url = HelloWorldws1Service.class.getClassLoader().getResource("HelloWorld1_large.wsdl");
         } 
         if (url == null) {
-            java.util.logging.Logger.getLogger(HelloWorldws1Service.class.getName())
-                .log(java.util.logging.Level.INFO, 
-                     "Can not initialize the default wsdl from {0}", "HelloWorld1_large.wsdl");
+//            java.util.logging.Logger.getLogger(HelloWorldws1Service.class.getName())
+//                .log(java.util.logging.Level.INFO, 
+//                     "Can not initialize the default wsdl from {0}", "HelloWorld1_large.wsdl");
         }       
         WSDL_LOCATION = url;
     }
